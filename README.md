@@ -31,3 +31,8 @@ https://ziglang.org/documentation/master/#struct
 
 Zig also doesn't use header files so we include Node interface and implementation in a single file.
 
+There are no private feilds in Zig so we're not using getters like the Cpp version. 
+
+https://github.com/ziglang/zig/issues/9909#issuecomment-942686366
+
+There are no hidden allocations in Zig so we're passing allocators explicitly!
