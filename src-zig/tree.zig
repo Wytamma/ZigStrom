@@ -1,5 +1,6 @@
 const std = @import("std");
-const Node = @import("node.zig");
+// use .Node to access the Node struct field in the node.zig module struct
+const Node = @import("node.zig").Node;
 
 pub const Tree = struct {
     is_rooted: bool = false,
