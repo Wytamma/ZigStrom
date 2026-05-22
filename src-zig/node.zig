@@ -2,9 +2,9 @@ const std = @import("std");
 
 // in Zig everything is a struct...
 pub const Node = struct {
-    left_child: ?*Node = 0,
-    right_sib: ?*Node = 0,
-    parent: ?*Node = 0,
+    left_child: ?*Node,
+    right_sib: ?*Node,
+    parent: ?*Node,
 
     number: i32 = -1,
     name: []const u8 = "",

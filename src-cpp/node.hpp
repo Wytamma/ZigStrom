@@ -7,13 +7,13 @@
 
 namespace strom {
 
-    //class Tree;
+    class Tree;
     //class TreeManip;
     //class Likelihood;
     //class Updater;
 
     class Node {
-            //friend class Tree;
+            friend class Tree;
             //friend class TreeManip;
             //friend class Likelihood;
             //friend class Updater;
@@ -26,7 +26,7 @@ namespace strom {
                     Node *              getLeftChild()  {return _left_child;}
                     Node *              getRightSib()   {return _right_sib;}
                     int                 getNumber()     {return _number;}
-                    std::string         getName()       {return _name;}
+                    std::string         getName() const       {return _name;}
                     //Split               getSplit()      {return _split;}
 
                     double              getEdgeLength() {return _edge_length;}

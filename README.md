@@ -36,3 +36,23 @@ There are no private feilds in Zig so we're not using getters like the Cpp versi
 https://github.com/ziglang/zig/issues/9909#issuecomment-942686366
 
 There are no hidden allocations in Zig so we're passing allocators explicitly!
+
+## 3.0 Creating Trees
+
+Zig is very simmilar to the Cpp version just need to pass around the allocator!
+
+Errors must be handle explicty in Zig or bubbled up. The compiler will trigger a build error if you ignore a returned error. So we add try statements before anything that can fail. 
+
+std.ArrayList, is a struct wrapper. You cannot index a struct directly. So you need to access the items within the struct. ArrayList looks like this:
+
+```
+pub fn ArrayList(comptime T: type) type {
+    return struct {
+        items: []T,          // This is the actual slice you can index!
+        capacity: usize,
+        allocator: Allocator,
+        
+        // ... methods like append(), init() ...
+    };
+}
+```
