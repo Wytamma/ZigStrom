@@ -231,8 +231,6 @@ namespace strom {
                 }
             }
         }
-
-
         return newick;
     }
 } 

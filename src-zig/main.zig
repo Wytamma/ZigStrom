@@ -11,6 +11,14 @@ pub fn main(init: std.process.Init) !void {
     var tm: TreeManip = .{};
     try tm.createTestTree(allocator);
     defer tm.deinit(allocator);
+    //
+    const nwk = try tm.makeNewick(allocator, 3, false);
+    defer allocator.free(nwk);
+    std.debug.print("{s}\n", .{nwk});
+
+    const nwk2 = try tm.makeNewick(allocator, 3, true);
+    defer allocator.free(nwk2);
+    std.debug.print("{s}", .{nwk2});
 
     std.debug.print("\nFinshed!\n", .{});
 }

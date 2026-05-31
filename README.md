@@ -79,3 +79,35 @@ pub fn deinit(self: *Self, allocator: std.mem.Allocator) void {
 }
 ```
 
+I also added build on save and a check step to the Zig build graph https://zigtools.org/zls/guides/build-on-save/
+
+## 5.0 
+
+Boost is a collection of C++ libraries. Zig doesn't have a direct equivalent to Boost, but we can use the zig standard library and other third-party libraries to achieve similar functionality. For the Cpp build we can add Boost with the Zig build system.
+
+```bash
+cd src-cpp/libraries
+wget https://www.boost.org/releases/1.71.0
+tar -xzf boost_1_71_0.tar.gz
+```
+
+Then we can add the Boost root directory to the include search path 
+
+```zig
+cpp_exe.root_module.addIncludePath(b.path("src-cpp/libraries/boost_1_71_0"));
+```
+
+Zig doesn't have strings so we build our newick string as a array  `var newick_buf: std.ArrayList(u8) = .empty; try newick_buf.append(gpa, '(');` and return by pass ownership back to the calling scope `newick_buf.toOwnedSlice(gpa)`.
+
+We also use ArrayList for the node stack as it has the necessary methods https://zig.guide/standard-library/stacks/.
+
+We need to make sure that we take pointers to values we dont own. In the Create test tree method we were previously taking local copies of tree nodes that were going out of scope when the function returned leaving dangling pointers. I've update the code to use pointers so the tree still owns them.
+
+
+
+ 
+
+
+
+
+
