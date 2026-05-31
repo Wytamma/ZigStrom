@@ -1,20 +1,19 @@
 #include <iostream>	
 #include "node.hpp"
 #include "tree.hpp"
+#include "tree_manip.hpp"
 
 using namespace strom;
 
 const double Node::_smallest_edge_length = 1.0e-12;
 
-int main(int argc, const char * argv[]) {
+int main() {
     std::cout << "Starting..." << std::endl;
-    Tree tree;
-    Node::Vector nodes = tree.nodes();
-    for (int i = 0; i < nodes.size() ; i++) {
-
-        std::cout << nodes[i].getName() << std::endl;
-    }
+    TreeManip tm;
+    tm.createTestTree();
+    std::cout << tm.makeNewick(3) << std::endl;
+    std::cout << tm.makeNewick(3, true) << std::endl;
     std::cout << "\nFinished!" << std::endl;
 
     return 0;
-}  
+}	

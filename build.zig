@@ -16,6 +16,19 @@ pub fn build(b: *std.Build) void {
 
     b.installArtifact(zig_exe);
 
+    // check step for ZLS zig build check
+    const check_exe = b.addExecutable(.{
+        .name = "strom-zig",
+        .root_module = b.createModule(.{
+            .target = target,
+            .optimize = optimse,
+            .root_source_file = b.path("src-zig/main.zig"),
+        }),
+    });
+
+    const check = b.step("check", "Check if strom compiles");
+    check.dependOn(&check_exe.step);
+
     // C++
     const cpp_exe = b.addExecutable(.{
         .name = "strom-cpp",
@@ -30,6 +43,9 @@ pub fn build(b: *std.Build) void {
             "-Wextra", // Adds additional warnings not included in -Wall.
         },
     });
+
+    // Add the Boost root directory to the include search path
+    cpp_exe.root_module.addIncludePath(b.path("src-cpp/libraries/boost_1_71_0"));
 
     b.installArtifact(cpp_exe);
 }

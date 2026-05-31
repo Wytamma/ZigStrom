@@ -39,11 +39,11 @@ There are no hidden allocations in Zig so we're passing allocators explicitly!
 
 ## 3.0 Creating Trees
 
-Zig is very simmilar to the Cpp version just need to pass around the allocator!
+Zig is very similar to the Cpp version just need to pass around the allocator!
 
-Errors must be handle explicty in Zig or bubbled up. The compiler will trigger a build error if you ignore a returned error. So we add try statements before anything that can fail. 
+Errors must be handle explicitly in Zig or bubbled up. The compiler will trigger a build error if you ignore a returned error. So we add try statements before anything that can fail. 
 
-std.ArrayList, is a struct wrapper. You cannot index a struct directly. So you need to access the items within the struct. ArrayList looks like this:
+In Zig `std.ArrayList`, is a struct wrapper. You cannot index a struct directly. So you need to access the items within the struct. ArrayList looks like this:
 
 ```
 pub fn ArrayList(comptime T: type) type {
@@ -56,3 +56,26 @@ pub fn ArrayList(comptime T: type) type {
     };
 }
 ```
+## 4.0 Creating a Tree Manipulator
+
+In Zig we have to be much more eexplicit about mem managment. Because the TreeManip struct holds the Tree we need to make sure we're not leaking memory.
+
+In TreeManip.createTestTree we heap allocate a Tree on the heap and store it in the TreeManip.tree. 
+
+```zig
+const tree = try gpa.create(Tree);
+tree.* = .{};
+self.tree = tree;
+```
+
+```zig
+pub fn deinit(self: *Self, allocator: std.mem.Allocator) void {
+    // dealocate the tree
+    if (self.tree) |tree| {
+        tree.deinit(allocator);
+        allocator.destroy(tree);
+        self.tree = null;
+    }
+}
+```
+

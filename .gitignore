@@ -1,3 +1,5 @@
 zig-out
 .zig-cache/
-
+src-cpp/libraries/boost_1_71_0
+src-cpp/libraries/boost_1_71_0.tar.gz
+.DS_Store
